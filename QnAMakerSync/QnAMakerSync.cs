@@ -61,7 +61,7 @@ namespace QnAMakerSync
 
         private QnAMakerKnowledgeBaseModel GetCurrentKnowledgeBase()
         {
-            string uri = QnaMakerEndpoint;
+            var uri = QnaMakerEndpoint;
             var client = new HttpClient
             {
                 BaseAddress = new Uri(uri)
@@ -159,38 +159,56 @@ namespace QnAMakerSync
             {
                 var kbItemPageIdMetaDataItem = kbItem.metadata.FirstOrDefault(m => m.name == "pageId");
                 var faqPageId = kbItemPageIdMetaDataItem != null ? Convert.ToInt16(kbItemPageIdMetaDataItem.value) : -1;
-                var faqPage = faqItems.FirstOrDefault(f => f.PageId == faqPageId);
+                var faqItem = faqItems.FirstOrDefault(f => f.PageId == faqPageId);
 
-                if (faqPage != null)
+                if (faqItem != null)
                 {
                     var updatedKbItem = new KbItemToUpdate
                     {
                         qnaId = kbItem.qnaId,
-                        answer = faqPage.Description,
+                        answer = faqItem.Description,
                         questions = new QuestionsUpdateModel()
                     };
 
-                    if (!kbItem.questions.Contains(faqPage.FAQQuestion))
+                    var metaDataItemsToDelete = kbItem.metadata
+                        .Where(m => !faqItem.Metadata.Select(f => f.Key).Contains(m.name)).ToList();
+
+                    var metaDataItemsToUpdate = kbItem.metadata
+                        .Where(m => faqItem.Metadata.Select(f => f.Key).Contains(m.name)).ToList();
+
+                    var metaDataItemsToAdd = faqItem.Metadata
+                        .Where(m => !metaDataItemsToUpdate.Select(a => a.name).Contains(m.Key) 
+                        && !metaDataItemsToDelete.Select(a => a.name).Contains(m.Key)).ToList();
+
+                    updatedKbItem.metadata.add = (metaDataItemsToAdd.AddRange(metaDataItemsToUpdate));
+                    metadata.AddRange(metaDataItemToAdd);
+                    metadata.AddRange(metaDataItemToAdd);
+
+                    //if (!kbItem.questions.Contains(faqItem.FAQQuestion))
+                    //{
+                    //    updatedKbItem.questions.add = new[] { faqItem.FAQQuestion };
+                    //    updatedKbItem.questions.delete = kbItem.questions;
+                    //}
+
+
+
+                    foreach (var metaDataItem in faqItem.Metadata)
                     {
-                        updatedKbItem.questions.add = new[] { faqPage.FAQQuestion };
-                        updatedKbItem.questions.delete = kbItem.questions;
+                        if (kbItem.metadata.FirstOrDefault(m => m.name == metaDataItem.Key) != null)
+                        {
+                            
+                        }
+                        else
+                        {
+                            
+                        }
+                        var metaDataItemToAdd = new MetaDataItem
+                        {
+                            name = metaDataItem.Key,
+                            value = metaDataItem.Value
+                        };
+                        metadata.Add(metaDataItemToAdd);
                     }
-
-                    var metadata = new List<MetaDataItem>();
-
-                    var categoryMetadataItem = new MetaDataItem
-                    {
-                        name = "category",
-                        value = faqPage.Category
-                    };
-                    var contentIdMetadataItem = new MetaDataItem
-                    {
-                        name = "pageId",
-                        value = faqPage.PageId.ToString()
-                    };
-
-                    metadata.Add(contentIdMetadataItem);
-                    metadata.Add(categoryMetadataItem);
 
                     updatedKbItem.metadata = new MetaDataUpdateModel
                     {
@@ -217,31 +235,30 @@ namespace QnAMakerSync
 
             var kbItemsToAdd = new List<KbItemToAdd>();
 
-            foreach (var faqPage in faqItemsToAdd)
+            foreach (var faqItem in faqItemsToAdd)
             {
                 var kbItem = new KbItemToAdd
                 {
-                    answer = faqPage.Description,
+                    answer = faqItem.Description,
                     metadata = new MetaDataItem[] { },
                     questions = new string[] { }
                 };
 
-                var questions = new List<string> { faqPage.FAQQuestion };
+                var questions = faqItem.FaqQuestions;
                 kbItem.questions = questions.ToArray();
 
                 var metadata = new List<MetaDataItem>();
-                var categoryMetadataItem = new MetaDataItem
+
+                foreach (var metaDataItem in faqItem.Metadata)
                 {
-                    name = "category",
-                    value = faqPage.Category
-                };
-                var contentIdMetadataItem = new MetaDataItem
-                {
-                    name = "pageId",
-                    value = faqPage.PageId.ToString()
-                };
-                metadata.Add(contentIdMetadataItem);
-                metadata.Add(categoryMetadataItem);
+                    var metaDataItemToAdd = new MetaDataItem
+                    {
+                        name = metaDataItem.Key,
+                        value = metaDataItem.Value
+                    };
+                    metadata.Add(metaDataItemToAdd);
+                }
+
                 kbItem.metadata = metadata.ToArray();
 
                 kbItemsToAdd.Add(kbItem);
