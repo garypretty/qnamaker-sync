@@ -1,9 +1,0 @@
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\bin\Debug\netstandard2.0\QnAMakerSync.deps.json
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\bin\Debug\netstandard2.0\QnAMakerSync.dll
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\obj\Debug\netstandard2.0\QnAMakerSync.csprojResolveAssemblyReference.cache
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\obj\Debug\netstandard2.0\QnAMakerSync.csproj.CoreCompileInputs.cache
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\obj\Debug\netstandard2.0\QnAMakerSync.AssemblyInfoInputs.cache
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\obj\Debug\netstandard2.0\QnAMakerSync.AssemblyInfo.cs
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\bin\Debug\netstandard2.0\QnAMakerSync.pdb
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\obj\Debug\netstandard2.0\QnAMakerSync.dll
-C:\Projects\GitHub\garypretty\qnamaker-sync\QnAMakerSync\obj\Debug\netstandard2.0\QnAMakerSync.pdb
