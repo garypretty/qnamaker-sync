@@ -2,6 +2,8 @@
 
 NuGet Package -> <https://www.nuget.org/packages/QnAMakerSync/1.0.0>
 
+## Summary
+
 C# library to allow you to sync QnA items to the Microsoft QnA Maker service from anywhere.
 
 Implemented for v3 of the QnA Maker Service (https://westus.dev.cognitive.microsoft.com/docs/services/597029932bcd590e74b648fb/operations/597037798a8bb5031800bf5b), the library allows you to build up a list of QnAItems (for example you might have existing FAQ pages in your CMS or in a CRM system) and sync them with the QnA Maker service.  You could use the library within a scheduled job to keep all of your items up to date in QnA Maker without the need of duplicating effort maintaining your items in more than one place (e.g. FAQ pages on your web site and in the QnA Maker portal).
@@ -15,7 +17,9 @@ Each item that you sync has the following properties;
 
 **One major advantage of using this library right now is that the QnA Maker Portal does not currently support adding metadata to QnA Items through the UI**
 
-Using the library is really simple. First build up your QnA Items.  I have shown a sample method below (also included in the repo in the sample project) which creates 2 QnA Items, but here is where you would potentially go and loop through all of the FAQ pages in your site or existing repository and build them up from there.  
+## Usage and samples 
+
+To start using the library to sync, first, build up your QnA Items.  I have shown a sample method below (also included in the repo in the sample project) which creates 2 QnA Items, but here is where you would potentially go and loop through all of the FAQ pages in your site or existing repository and build them up from there.  
 
 ```cs
 
