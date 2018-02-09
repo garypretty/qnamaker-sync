@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("QnAMakerSyncLib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Sync library for Microsoft Qna Maker Service")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Gary Pretty")]
 [assembly: AssemblyProduct("QnAMakerSyncLib")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]

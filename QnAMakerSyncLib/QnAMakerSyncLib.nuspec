@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+    <id>QnAMakerSync</id>
+    <version>1.0.0</version>
+    <title>QnAMakerSync</title>
+    <summary>Sync library for Microsoft Qna Maker Service</summary>
+    <authors>Gary Pretty</authors>
+    <owners>Gary Pretty</owners>
+    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <projectUrl>https://github.com/garypretty/qnamaker-sync</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>Initial version.</releaseNotes>
+    <description>C# library to allow you to sync QnA items to the Microsoft QnA Maker service from anywhere.  Implemented for v3 of the QnA Maker Service, the library allows you to build up a list of QnAItems (for example you might have existing FAQ pages in your CMS or in a CRM system) and sync them with the QnA Maker service.  You could use the library within a scheduled job to keep all of your items up to date in QnA Maker without the need of duplicating effort maintaining your items in more than one place (e.g. FAQ pages on your web site and in the QnA Maker portal. Full source and sample can be found over on the GitHub site.</description>
+    <!-- Copyright information -->
+    <copyright>Copyright ©2018 Gary Pretty</copyright>
+    <!-- Tags appear in the gallery and can be used for tag searches -->
+    <tags>qnamaker qna maker microsoft cognitive services cognitiveservices</tags>
+</metadata>
+</package>
