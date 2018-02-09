@@ -13,7 +13,7 @@ Each item that you sync has the following properties;
 * A unique Id (string) that you use to identify the QnA Item locally (so that when you sync again we update it instead of add a new one)
 * Metadata - key value pairs you can add to QnA Items which can be used to either strictly filter or boost certain answers you get back from QnA Maker service when you query it for answers later on.
 
-**One major advantage of using this library right now is that the QnA Maker Portal does not currently support adding metadata to QnA Items through the UI **
+**One major advantage of using this library right now is that the QnA Maker Portal does not currently support adding metadata to QnA Items through the UI**
 
 Using the library is really simple. First build up your QnA Items.  I have shown a sample method below (also included in the repo in the sample project) which creates 2 QnA Items, but here is where you would potentially go and loop through all of the FAQ pages in your site or existing repository and build them up from there.  
 
