@@ -1,6 +1,6 @@
-﻿namespace QnAMakerSync.Models
+﻿namespace QnAMakerSyncLib.Models
 {
-    internal class Questions
+    internal class QuestionsUpdateModel
     {
         public string[] add { get; set; }
         public string[] delete { get; set; }

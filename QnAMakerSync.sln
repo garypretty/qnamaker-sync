@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2008
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QnAMakerSync", "QnAMakerSync\QnAMakerSync.csproj", "{C90B410C-E2A7-4E9B-83D2-97796920B676}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QnAMakerSyncSample", "QnAMakerSyncSample\QnAMakerSyncSample.csproj", "{7BE8C613-C968-4A76-90A8-B7C29228C1F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QnAMakerSyncLib", "QnAMakerSyncLib\QnAMakerSyncLib.csproj", "{ABD2125E-F2A2-4AB5-96E5-98B9787EA857}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C90B410C-E2A7-4E9B-83D2-97796920B676}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C90B410C-E2A7-4E9B-83D2-97796920B676}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C90B410C-E2A7-4E9B-83D2-97796920B676}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C90B410C-E2A7-4E9B-83D2-97796920B676}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BE8C613-C968-4A76-90A8-B7C29228C1F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BE8C613-C968-4A76-90A8-B7C29228C1F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BE8C613-C968-4A76-90A8-B7C29228C1F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BE8C613-C968-4A76-90A8-B7C29228C1F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABD2125E-F2A2-4AB5-96E5-98B9787EA857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABD2125E-F2A2-4AB5-96E5-98B9787EA857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABD2125E-F2A2-4AB5-96E5-98B9787EA857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABD2125E-F2A2-4AB5-96E5-98B9787EA857}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

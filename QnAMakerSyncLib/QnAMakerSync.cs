@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using QnAMakerSync.Models;
+using QnAMakerSyncLib.Models;
 
-namespace QnAMakerSync
+namespace QnAMakerSyncLib
 {
     public class QnAMakerSync
     {
@@ -25,10 +24,10 @@ namespace QnAMakerSync
             QnaMakerEndpoint = qnaMakerEndpoint;
         }
 
-        public async Task UpdateKnowlegdeBase(List<FaqItem> faqPages)
+        public async Task UpdateKnowlegdeBase(List<QnAItem> qnaItems)
         {
             var currentKnowledgeBase = GetCurrentKnowledgeBase();
-            var qnaMakerUpdateModel = GenerateUpdateModel(faqPages, currentKnowledgeBase);
+            var qnaMakerUpdateModel = GenerateUpdateModel(qnaItems, currentKnowledgeBase);
             await UpdateKnowledgeBase(qnaMakerUpdateModel);
         }
 
@@ -79,7 +78,7 @@ namespace QnAMakerSync
             return knowledgeBase;
         }
 
-        private QnAMakerUpdateModel GenerateUpdateModel(List<FaqItem> faqsToSync, QnAMakerKnowledgeBaseModel currentKnowledgeBase)
+        private QnAMakerUpdateModel GenerateUpdateModel(List<QnAItem> qnaItemsToSync, QnAMakerKnowledgeBaseModel currentKnowledgeBase)
         {
             var qnaMakerUpdateModel = new QnAMakerUpdateModel
             {
@@ -88,34 +87,34 @@ namespace QnAMakerSync
                 delete = new ItemsToDelete()
             };
 
-            var currentFaqItemIdsInKb = CurrentFaqItemIdsInKb(currentKnowledgeBase);
+            var currentQnaItemIdsInKb = CurrentQnaItemIdsInKb(currentKnowledgeBase);
 
-            var faqItemsToAdd = faqsToSync.Where(f => !currentFaqItemIdsInKb.Contains(f.ItemId)).ToList();
-            qnaMakerUpdateModel.add = GenerateItemsToAddModel(faqItemsToAdd);
+            var qnaItemsToAdd = qnaItemsToSync.Where(f => !currentQnaItemIdsInKb.Contains(f.ItemId)).ToList();
+            qnaMakerUpdateModel.add = GenerateItemsToAddModel(qnaItemsToAdd);
 
-            qnaMakerUpdateModel.delete = GenerateItemsToDeleteModel(currentKnowledgeBase.qnaList.ToList(), faqsToSync);
+            qnaMakerUpdateModel.delete = GenerateItemsToDeleteModel(currentKnowledgeBase.qnaList.ToList(), qnaItemsToSync);
 
-            qnaMakerUpdateModel.update = GenerateItemsToUpdateModel(currentKnowledgeBase.qnaList.ToList(), faqsToSync);
+            qnaMakerUpdateModel.update = GenerateItemsToUpdateModel(currentKnowledgeBase.qnaList.ToList(), qnaItemsToSync);
 
             return qnaMakerUpdateModel;
         }
 
-        private static List<string> CurrentFaqItemIdsInKb(QnAMakerKnowledgeBaseModel currentKnowledgeBase)
+        private static List<string> CurrentQnaItemIdsInKb(QnAMakerKnowledgeBaseModel currentKnowledgeBase)
         {
-            var currentFaqItemIdsInKb = new List<string>();
+            var currentQnaItemIdsInKb = new List<string>();
 
             foreach (var kbItem in currentKnowledgeBase.qnaList)
             {
                 var kbItemIdMetaItem = kbItem.metadata.FirstOrDefault(m => m.name == "itemId");
                 if (kbItemIdMetaItem != null)
                 {
-                    currentFaqItemIdsInKb.Add(kbItemIdMetaItem.value);
+                    currentQnaItemIdsInKb.Add(kbItemIdMetaItem.value);
                 }
             }
-            return currentFaqItemIdsInKb;
+            return currentQnaItemIdsInKb;
         }
 
-        private static ItemsToDelete GenerateItemsToDeleteModel(IEnumerable<KbItem> currentKnowledgeBaseItems, List<FaqItem> faqItems)
+        private static ItemsToDelete GenerateItemsToDeleteModel(IEnumerable<KbItem> currentKnowledgeBaseItems, List<QnAItem> qnaItems)
         {
             var kbIdsToDelete = new List<int>();
 
@@ -125,9 +124,9 @@ namespace QnAMakerSync
 
                 if (kbItemIdMetaDataItem != null)
                 {
-                    var faqItem = faqItems.FirstOrDefault(f => f.ItemId == kbItemIdMetaDataItem.value);
+                    var qnaItem = qnaItems.FirstOrDefault(f => f.ItemId == kbItemIdMetaDataItem.value);
 
-                    if (faqItem == null)
+                    if (qnaItem == null)
                     {
                         kbIdsToDelete.Add(kbItem.qnaId);
                     }
@@ -148,7 +147,7 @@ namespace QnAMakerSync
             return itemsToDeleteModel;
         }
 
-        private ItemsToUpdate GenerateItemsToUpdateModel(IEnumerable<KbItem> currentKnowledgeBaseItems, List<FaqItem> faqItems)
+        private ItemsToUpdate GenerateItemsToUpdateModel(IEnumerable<KbItem> currentKnowledgeBaseItems, List<QnAItem> qnaItems)
         {
             var itemsToUpdateModel = new ItemsToUpdate
             {
@@ -164,34 +163,36 @@ namespace QnAMakerSync
 
                 if (kbItemIdMetaDataItem != null)
                 {
-                    var faqItem = faqItems.FirstOrDefault(f => f.ItemId == kbItemIdMetaDataItem.value);
+                    var qnaItem = qnaItems.FirstOrDefault(f => f.ItemId == kbItemIdMetaDataItem.value);
 
-                    if (faqItem != null)
+                    if (qnaItem != null)
                     {
                         var updatedKbItem = new KbItemToUpdate
                         {
                             qnaId = kbItem.qnaId,
-                            answer = faqItem.Description,
+                            answer = qnaItem.Answer,
                             questions = new QuestionsUpdateModel()
                         };
 
-                        var questionsToAdd = faqItem.FaqQuestions.ToList();
+                        var questionsToAdd = qnaItem.Questions.ToList();
                         updatedKbItem.questions.add = questionsToAdd.ToArray();
 
                         var questionsToDelete = kbItem.questions.ToList().Where(q => !questionsToAdd.Contains(q));
                         updatedKbItem.questions.delete = questionsToDelete.ToArray();
 
                         var metaDataItemsToDelete = kbItem.metadata
-                            .Where(m => !faqItem.Metadata.Select(f => f.Key).Contains(m.name)).ToList();
+                            .Where(m => !qnaItem.Metadata.Select(f => f.Key).Contains(m.name)).ToList();
 
-                        var metaDataItemsToAddOrUpdate = new List<MetaDataItem>();
-                        metaDataItemsToAddOrUpdate.Add(new MetaDataItem()
+                        var metaDataItemsToAddOrUpdate = new List<MetaDataItem>
                         {
-                            name = "itemId",
-                            value = faqItem.ItemId
-                        });
+                            new MetaDataItem()
+                            {
+                                name = "itemId",
+                                value = qnaItem.ItemId
+                            }
+                        };
 
-                        foreach (var metadataItem in faqItem.Metadata)
+                        foreach (var metadataItem in qnaItem.Metadata)
                         {
                             metaDataItemsToAddOrUpdate.Add(new MetaDataItem()
                             {
@@ -215,7 +216,7 @@ namespace QnAMakerSync
             return itemsToUpdateModel;
         }
 
-        private static ItemsToAdd GenerateItemsToAddModel(List<FaqItem> faqItemsToAdd)
+        private static ItemsToAdd GenerateItemsToAddModel(List<QnAItem> qnaItemsToAdd)
         {
             var itemsToAddModel = new ItemsToAdd
             {
@@ -226,27 +227,28 @@ namespace QnAMakerSync
 
             var kbItemsToAdd = new List<KbItemToAdd>();
 
-            foreach (var faqItem in faqItemsToAdd)
+            foreach (var qnaItem in qnaItemsToAdd)
             {
                 var kbItem = new KbItemToAdd
                 {
-                    answer = faqItem.Description,
+                    answer = qnaItem.Answer,
                     metadata = new MetaDataItem[] { },
                     questions = new string[] { }
                 };
 
-                var questions = faqItem.FaqQuestions;
+                var questions = qnaItem.Questions;
                 kbItem.questions = questions.ToArray();
 
-                var metadata = new List<MetaDataItem>();
-
-                metadata.Add(new MetaDataItem()
+                var metadata = new List<MetaDataItem>
                 {
-                    name = "itemId",
-                    value = faqItem.ItemId
-                });
+                    new MetaDataItem()
+                    {
+                        name = "itemId",
+                        value = qnaItem.ItemId
+                    }
+                };
 
-                foreach (var metaDataItem in faqItem.Metadata)
+                foreach (var metaDataItem in qnaItem.Metadata)
                 {
                     var metaDataItemToAdd = new MetaDataItem
                     {

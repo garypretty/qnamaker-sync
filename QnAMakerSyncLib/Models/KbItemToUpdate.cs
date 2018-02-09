@@ -1,4 +1,4 @@
-﻿namespace QnAMakerSync.Models
+﻿namespace QnAMakerSyncLib.Models
 {
     internal class KbItemToUpdate
     {

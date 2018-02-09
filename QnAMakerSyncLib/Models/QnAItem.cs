@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace QnAMakerSync.Models
+namespace QnAMakerSyncLib.Models
 {
-    public class FaqItem
+    public class QnAItem
     {
-        public List<string> FaqQuestions { get; set; }
+        public List<string> Questions { get; set; }
 
-        public string Description { get; set; }
+        public string Answer { get; set; }
 
         public string ItemId { get; set; }
 
