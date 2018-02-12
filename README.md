@@ -8,14 +8,14 @@ C# library to allow you to sync QnA items to the Microsoft QnA Maker service fro
 
 Implemented for v3 of the QnA Maker Service (https://westus.dev.cognitive.microsoft.com/docs/services/597029932bcd590e74b648fb/operations/597037798a8bb5031800bf5b), the library allows you to build up a list of QnAItems (for example you might have existing FAQ pages in your CMS or in a CRM system) and sync them with the QnA Maker service.  You could use the library within a scheduled job to keep all of your items up to date in QnA Maker without the need of duplicating effort maintaining your items in more than one place (e.g. FAQ pages on your web site and in the QnA Maker portal).
 
+**One major advantage of using this library right now is that the QnA Maker Portal does not currently support adding metadata to QnA Items through the UI**
+
 Each item that you sync has the following properties;
 
 * One or more questions
 * An answer
 * A unique Id (string) that you use to identify the QnA Item locally (so that when you sync again we update it instead of add a new one)
 * Metadata - key value pairs you can add to QnA Items which can be used to either strictly filter or boost certain answers you get back from QnA Maker service when you query it for answers later on.
-
-**One major advantage of using this library right now is that the QnA Maker Portal does not currently support adding metadata to QnA Items through the UI**
 
 Right now the sync is one-way, from your respository up to the QnA Maker service and your respository is expected to be the single source of truth for your QnA items. Any items found within your QnA Maker knowledgebase will be removed if a matching item is not found within your local repository (using the ItemId). A future update will provide additional capabilities, such as ignoring items in your knowledgebase that were not inserted using this library (i.e. those that you manually add within the portal) and also the ability to sync items created within the portal back down to your own knowledgebase.
 
