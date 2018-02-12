@@ -84,4 +84,5 @@ private static List<QnAItem> GetQnAItems()
 ```
 
 The **ItemId** property should be a unique identifier for the QnA Item wherever you are storing them outside of QnA Maker, e.g. if you have FAQ pages in your CMS then you might use the ID of the page. Here we are also adding a metadata item called 'Category', but this could be absolutely anything you want to filter your answer on later.
+
 *Note: When using this package, "itemId" is a reserved metadata value that is used to store the ItemId you provide on the QnAItem to allow updates to take place. Please avoid using  "itemId" as a metadata value.*
