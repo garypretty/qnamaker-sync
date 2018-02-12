@@ -1,6 +1,6 @@
 # QnA Maker Sync Library
 
-NuGet Package -> <https://www.nuget.org/packages/QnAMakerSync/1.0.0>
+NuGet Package -> <https://www.nuget.org/packages/QnAMakerSync>
 
 ## Summary
 
