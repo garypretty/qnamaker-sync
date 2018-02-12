@@ -17,7 +17,7 @@ Each item that you sync has the following properties;
 * A unique Id (string) that you use to identify the QnA Item locally (so that when you sync again we update it instead of add a new one)
 * Metadata - key value pairs you can add to QnA Items which can be used to either strictly filter or boost certain answers you get back from QnA Maker service when you query it for answers later on.
 
-Right now the sync is one-way, from your respository up to the QnA Maker service and your respository is expected to be the single source of truth for your QnA items. Any items found within your QnA Maker knowledgebase will be removed if a matching item is not found within your local repository (using the ItemId). A future update will provide additional capabilities, such as ignoring items in your knowledgebase that were not inserted using this library (i.e. those that you manually add within the portal) and also the ability to sync items created within the portal back down to your own knowledgebase.
+Curently the sync performed is one-way, from your respository up to the QnA Maker service and your respository is expected to be the single source of truth for your QnA items. Any items found within your QnA Maker knowledgebase will be removed if a matching item is not found within your local repository (using the ItemId). A future update will provide additional capabilities, such as ignoring items in your knowledgebase that were not inserted using this library (i.e. those that you manually add within the portal) and also the ability to sync items created within the portal back down to your own knowledgebase.
 
 ## Usage and samples 
 
